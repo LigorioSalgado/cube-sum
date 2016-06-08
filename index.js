@@ -27,7 +27,7 @@ app.get('/',function (req,res){
 app.listen(3000);
 
 
-require('./app/controllers/contactlist')(app);
+require('./app/controllers/cube')(app);
 
 
 console.log ("Server works");
