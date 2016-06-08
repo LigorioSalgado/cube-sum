@@ -1,0 +1,16 @@
+{
+  "name": "cube-summation",
+  "version": "1.0.0",
+  "description": "Calculate the sum of numbers  in a 3D matrix  ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ligorio Edwin Salgado Flores",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "swig": "^1.4.2"
+  }
+}
