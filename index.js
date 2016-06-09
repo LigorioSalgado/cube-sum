@@ -3,7 +3,7 @@ var swig	= require('swig');
 var parser = require('body-parser');
 var app = express();
 
-var db = mongo('contactlist',['contactlist']);
+
 app.use(parser.json());
 
 app.set('view cache', false);

@@ -5,24 +5,80 @@
 
 	<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+	<link href="/css/elements.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-	<div class="container " ng-controller="cubeController"> 
-
-		<input type="text" class="form-control" ng-model="query.text">
-		<button ng-click="checkReq">Enviar</button>
-
-
-
-	</div>
-
-
-
-
+<body >
+    <br>
+    
+    <div class="row">
+        <div class="col-md-4 col-md-offset-1">Cube summation in NodeJs</div>
+    </div>
+    <br>
+     <div class="row">
+        <div class="element0 col-md-4 col-md-offset-1"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="element1 col-md-4 col-md-offset-1"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="element2 col-md-4 col-md-offset-1"></div>
+    </div>
+    <br>
+    <div id="prompt" class="row nodisplay">
+	   <div class="col-md-2 col-md-offset-1">cube@summation ~$ </div><div class="col-md-7"><input ng-enter="checkQuery()" type="text" class="prompt" ng-model="query"  autofocus></div>
+    </div>
 
 </body>
 
 <script src="/js/angular.min.js"></script>
 <script  src="/js/controllers.js"></script>
+<script  src="/js/jquery.min.js"></script>
+<script  src="/js/typed.js"></script>
+<script type="text/javascript">
+
+    setTimeout(function(){
+        $(".element0").typed({
+            strings: ["¡Bienvenido! Este proyecto realiza la suma de los elementos de una matriz 3D"],
+            typeSpeed: 0, // typing speed
+            backDelay: 750, // pause before backspacing
+            loop: false, // loop on or off (true or false)
+            loopCount: false, // number of loops, false = infinite
+            showCursor:false 
+        });
+    }, 0);
+
+    setTimeout(function(){
+        $(".element1").typed({
+            strings: ["Instrucciones:"],
+            typeSpeed: 0, // typing speed
+            backDelay: 750, // pause before backspacing
+            loop: false, // loop on or off (true or false)
+            loopCount: false, // number of loops, false = infinite
+            showCursor:false // call function after typing is done
+        });
+    }, 4000);
+
+    setTimeout(function(){
+        $(".element2").typed({
+            strings: ["1.- Ingrese el tamaño del cubo y el numero de querys a realizar Ex: 4 5 donde 4 es el tamaño del cubo y 5 el numero de querys "+
+            " <br> 2.- 'UPADTE x y z w' comando para modificar una casilla, donde 'x', 'y', 'z' son las coordenadas de la casilla y 'w' es el nuevo valor de la casilla"+
+            "<br> 3.-'QUERY X1Y1Z1X2Y2Z2'  comando para sumar los valores dentro de los rangos solicitados  Ex: QUERY 1112222 "],
+            typeSpeed: 0, // typing speed
+            backDelay: 750, // pause before backspacing
+            loop: false, // loop on or off (true or false)
+            loopCount: false, // number of loops, false = infinite
+            showCursor:false, // call function after typing is done
+            callback: function(){ $("#prompt").css("display", "inherit"); }
+        });
+    }, 5000);
+
+
+
+   
+	
+	
+</script>
 
 </html>

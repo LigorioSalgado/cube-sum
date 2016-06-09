@@ -1,21 +1,25 @@
-module.exports = function Matrix (n,m){
+var method = Matrix.prototype;
+
+function Matrix (n,m){
 
 	this.n = n;
 	this.m = m;
 	this.matrix = [];
 
+	this.createMatrix();
 
 }
 
-Matrix.prototype {
+method.constructor = Matrix
 
-	constructor:Matrix,
-
-	createMatrix:function(){
+method.createMatrix = function(){
 		var size = this.n;
+		console.log(this.matrix);
 
 		for (var i=0; i <= size; i++){
+				this.matrix[i]=[];
 			for (var j=0; j<=size; j++){
+				this.matrix[i][j]=[];
 				for(var h=0;h<=size;h++){
 
 					this.matrix[i][j][h] = 0; // se crea la matriz en ceros 
@@ -27,9 +31,9 @@ Matrix.prototype {
 		console.log("Matrix created");
 	}
 
-	updateMatrix:function(x,y,z,num){ this.matrix[x][y][z] = num;	} //Hace el update en la posición indicada y con el numero dentro de la matriz
+method.updateMatrix =function(x,y,z,num){ this.matrix[x][y][z] = num;	}, //Hace el update en la posición indicada y con el numero dentro de la matriz
 
-	sumMatrix: function (x1,y1,z1,x2,y2,z2){
+method.sumMatrix = function (x1,y1,z1,x2,y2,z2){
 		var x = x1; var y = y1; var z = z1; // Se asignan los valores de las primeras coordenadas  a variables genericas
 		var add = 0; // variable donde se almacena la suma del rango dentro de la matriz
 
@@ -50,14 +54,15 @@ Matrix.prototype {
 	/* Esta Seccion es de Getters */
 
 
-	getMatrix: function(){
+	method.getMatrix = function(){
 		return this.matrix;	
 
 	}
 
-	getSize: function() {
+	method.getSize = function() {
 		return this.n;
 
 	}
 
-}
+
+module.exports = Matrix; 
