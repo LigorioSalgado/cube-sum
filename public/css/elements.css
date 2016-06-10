@@ -68,3 +68,14 @@ input[type="color"]:focus,
     50% { opacity:0; }
     100% { opacity:1; }
 }
+
+.red{
+    color:red;
+}
+
+.blue{
+    color:blue;
+}
+.yellow {
+	color:yellow;
+}
