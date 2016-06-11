@@ -34,7 +34,7 @@ cubeSum.controller('cubeCtrl',['$scope','$http', function($scope,$http){
 				break;
 			case (arr[0] == "UPDATE" || arr[0] == "update" ):
 				console.log("Modificamos la matriz");
-				$scope.updateMatrix(arr[1]);
+				$scope.updateMatrix(arr[1],arr[2]);
 				break;
 			case (arr[0] == "QUERY" || arr[0] == "query" ):
 				console.log("sumamos la matriz");
@@ -60,36 +60,50 @@ cubeSum.controller('cubeCtrl',['$scope','$http', function($scope,$http){
 
 
 		$http.post('/matrix/new',obj).success(function(response){
-				if(response.status == 0){
-					$scope.class = "red";
-					$scope.result = "Ooops! algo salio mal"
+				switch(response.status){
 
-				}
-				else if (response.status == 1) {
-					$scope.class = "blue";
-					$scope.result = "Matrix creada"
-				}
+					case 0: 
+							$scope.class = "red";
+							$scope.result = "Ooops! algo salio mal";
+							break;
+					case 1: 
+							$scope.class = "blue";
+							$scope.result = "Matriz creada";
+							break;
+
+			}
+				
 				
 			}); 
 
 	}
 
-	$scope.updateMatrix = function(elements){
+	$scope.updateMatrix = function(elements,num){
 			var coord = elements.split("");
 			 console.log(coord);
-			var obj = JSON.parse('{"x":'+coord[0]+',"y":'+coord[1]+',"z":'+coord[2]+',"w":'+coord[3]+' }') ;
+			var obj = JSON.parse('{"x":'+coord[0]+',"y":'+coord[1]+',"z":'+coord[2]+',"w":'+num+' }') ;
 
 
 		$http.post('/matrix/update',obj).success(function(response){
+				console.log(response);
 
-				if(response.status == 0){
-					$scope.class = "red";
-					$scope.result = "Ooops! algo salio mal al intentar modificar la matriz"
-				}
-				else if (response.status == 1) {
-					$scope.class = "blue";
-					$scope.result = "Matrix modificada en: "+coord[0]+coord[1]+coord[2];
-				}
+				switch(response.status){
+
+					case 0: 
+							$scope.class = "red";
+							$scope.result = response.message;
+							break;
+					case 1: 
+							$scope.class = "blue";
+							$scope.result = "Matriz modificada en: "+coord[0]+coord[1]+coord[2];
+							break;
+					case 4: 
+							$scope.class = "yellow";
+							$scope.result = "Se necesita inicializar la matriz";
+							break;
+
+			}
+				
 		});
 
 	}
@@ -101,16 +115,23 @@ cubeSum.controller('cubeCtrl',['$scope','$http', function($scope,$http){
 		var obj = JSON.parse(json);
 
 		$http.post('/matrix/sum',obj).success(function(response){
-			
-				if(response.status == 0){
-					$scope.class = "red";
-					$scope.result = "Ooops! algo salio mal al intentar modificar la matriz"
-				}
-				else if (response.status == 1) {
-					$scope.class = "blue";
-					$scope.result = "Total de la suma: "+response.sum;
-				}
 
+				switch(response.status){
+
+					case 0: 
+							$scope.class = "red";
+							$scope.result = response.error;
+							break;
+					case 1: 
+							$scope.class = "blue";
+							$scope.result = "Total de la suma: "+response.sum;
+							break;
+					case 4: 
+							$scope.class = "yellow";
+							$scope.result = "Se necesita inicializar la matriz";
+							break;
+
+			}
 
 		});
 
