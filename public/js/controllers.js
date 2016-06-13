@@ -86,61 +86,74 @@ cubeSum.controller('cubeCtrl',['$scope','$http', function($scope,$http){
 	$scope.updateMatrix = function(elements,num){
 			var coord = elements.split("");
 			 console.log(coord);
-			var obj = JSON.parse('{"x":'+coord[0]+',"y":'+coord[1]+',"z":'+coord[2]+',"w":'+num+' }') ;
+			
+			if(isNaN(coord[0]) || isNaN(coord[1]) || isNaN(coord[2]) || isNaN(num)){
+				$scope.class = "red";
+				$scope.result = "Se necesitan numeros en las coordenadas o en el valor";
 
-
-		$http.post('/matrix/update',obj).success(function(response){
-				console.log(response);
-
-				switch(response.status){
-
-					case 0: 
-							$scope.class = "red";
-							$scope.result = response.message;
-							break;
-					case 1: 
-							$scope.class = "blue";
-							$scope.result = "Matriz modificada en: "+coord[0]+coord[1]+coord[2];
-							break;
-					case 4: 
-							$scope.class = "yellow";
-							$scope.result = "Se necesita inicializar la matriz";
-							break;
 
 			}
-				
-		});
+
+			else{
+				var obj = JSON.parse('{"x":'+coord[0]+',"y":'+coord[1]+',"z":'+coord[2]+',"w":'+num+' }') ;
+				$http.post('/matrix/update',obj).success(function(response){
+						console.log(response);
+
+						switch(response.status){
+
+							case 0: 
+									$scope.class = "red";
+									$scope.result = response.message;
+									break;
+							case 1: 
+									$scope.class = "blue";
+									$scope.result = "Matriz modificada en: "+coord[0]+coord[1]+coord[2];
+									break;
+							case 4: 
+									$scope.class = "yellow";
+									$scope.result = "Se necesita inicializar la matriz";
+									break;
+
+					}
+						
+				});
+
+			}
 
 	}
 
 	$scope.sumMatrix = function (elements){
 		var coord = elements.split("");
+		if(isNaN(coord[0]) || isNaN(coord[1]) || isNaN(coord[2]) || isNaN(coord[3]) || isNaN(coord[4]) || isNaN(coord[5]) ) {
+			$scope.class = "red";
+			$scope.result = "Se necesitan numeros en las coordenadas";
+		}
+		else{
+			
+			var json = '{"x1":'+coord[0]+',"y1":'+coord[1]+',"z1":'+coord[2]+',"x2":'+coord[3]+',"y2":'+coord[4]+',"z2":'+coord[5]+' }'
+			var obj = JSON.parse(json);
+			$http.post('/matrix/sum',obj).success(function(response){
 
-		var json = '{"x1":'+coord[0]+',"y1":'+coord[1]+',"z1":'+coord[2]+',"x2":'+coord[3]+',"y2":'+coord[4]+',"z2":'+coord[5]+' }'
-		var obj = JSON.parse(json);
+					switch(response.status){
 
-		$http.post('/matrix/sum',obj).success(function(response){
-
-				switch(response.status){
-
-					case 0: 
-							$scope.class = "red";
-							$scope.result = response.error;
-							break;
-					case 1: 
-							$scope.class = "blue";
-							$scope.result = "Total de la suma: "+response.sum;
-							break;
-					case 4: 
-							$scope.class = "yellow";
-							$scope.result = "Se necesita inicializar la matriz";
-							break;
+						case 0: 
+								$scope.class = "red";
+								$scope.result = response.error;
+								break;
+						case 1: 
+								$scope.class = "blue";
+								$scope.result = "Total de la suma: "+response.sum;
+								break;
+						case 4: 
+								$scope.class = "yellow";
+								$scope.result = "Se necesita inicializar la matriz";
+								break;
 
 			}
 
 		});
 
-
+	}
 		
 	}
 
