@@ -98,6 +98,11 @@ method.sumMatrix = function (x,y,z){
 
 	}
 
+	method.getQuerys = function() {
+		return this.m;
+
+	}
+
 	method.setMatrix = function() {
 		this.matrix = null;
 

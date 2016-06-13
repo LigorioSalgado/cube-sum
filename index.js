@@ -1,9 +1,10 @@
 var express = require('express');
 var swig	= require('swig');
 var parser = require('body-parser');
+var session = require('express-session');
 var app = express();
 
-
+app.use(session({secret: '12345678'}));
 app.use(parser.json());
 
 app.set('view cache', false);

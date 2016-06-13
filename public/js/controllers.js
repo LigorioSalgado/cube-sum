@@ -109,6 +109,12 @@ cubeSum.controller('cubeCtrl',['$scope','$http', function($scope,$http){
 									$scope.class = "blue";
 									$scope.result = "Matriz modificada en: "+coord[0]+coord[1]+coord[2];
 									break;
+
+							case 3: 
+									$scope.class = "yellow";
+									$scope.result = "excediste el numero de querys";
+									break;
+
 							case 4: 
 									$scope.class = "yellow";
 									$scope.result = "Se necesita inicializar la matriz";
@@ -143,6 +149,11 @@ cubeSum.controller('cubeCtrl',['$scope','$http', function($scope,$http){
 						case 1: 
 								$scope.class = "blue";
 								$scope.result = "Total de la suma: "+response.sum;
+								break;
+
+						case 3: 
+								$scope.class = "yellow";
+								$scope.result = "excediste el numero de querys";
 								break;
 						case 4: 
 								$scope.class = "yellow";

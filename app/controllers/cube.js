@@ -4,7 +4,6 @@ var Matrix = require('../util/matrix')
 var cubeController = function (app){
 
 
-
 app.post('/matrix/new', function(req,res){
 	var response = null;
 	console.log("New request");
@@ -17,7 +16,8 @@ app.post('/matrix/new', function(req,res){
 	}else{
 		var num_query = parseInt(req.body.querys);
 		    global.matrix = new Matrix(size,num_query);
-		
+			global.session = req.session;
+			global.session.querys = 0;
 
 		if (!global.matrix){
 		    response = JSON.parse('{"status":0}');
@@ -35,14 +35,25 @@ app.post('/matrix/new', function(req,res){
 
 app.post('/matrix/update', function(req,res){
 	var response = null;
+	global.session = req.session;
+	global.session.querys = session.querys+1;
 	console.log("Update matrix");
+
 	if(!req.body) return res.sendStatus(400);
 	var x = parseInt(req.body.x);
 	var y = parseInt(req.body.y);
 	var z = parseInt(req.body.z);
 	var w = parseInt(req.body.w);
 
-	if(global.matrix){
+	if(!global.matrix){
+			response = JSON.parse('{"status":4}');
+			res.json(response);
+	} else if (global.session.querys > global.matrix.getQuerys()){
+			response = JSON.parse('{"status":3}');
+			res.json(response);
+
+	}
+	else {
 			global.matrix.updateMatrix(x,y,z,w,function(err){
 				
 
@@ -56,11 +67,7 @@ app.post('/matrix/update', function(req,res){
 			});
 			console.log(response);
 			res.json(response);
-	}
-	else {
-
-			response = JSON.parse('{"status":4}');
-			res.json(response);
+			
 	}
 
 });
@@ -68,6 +75,8 @@ app.post('/matrix/update', function(req,res){
 app.post('/matrix/sum', function(req,res){
 	var response = null;
 	console.log("Sum matrix");
+	global.session = req.session;
+	global.session.querys = session.querys+1;
 	if(!req.body) return res.sendStatus(400);
 
 	var x1 = parseInt(req.body.x1);
@@ -78,8 +87,18 @@ app.post('/matrix/sum', function(req,res){
 	var y2 = parseInt(req.body.y2);
 	var z2 = parseInt(req.body.z2);
 
-	if(global.matrix){
+	if(!global.matrix){
+		response = JSON.parse('{"status":4}');
+		res.json(response);
 
+		
+	}
+	else if(global.session.querys > global.matrix.getQuerys()){
+
+		response = JSON.parse('{"status":3}');
+		res.json(response);
+	}
+	else{
 		var val1 =global.matrix.sumMatrix(x2,y2,z2) - global.matrix.sumMatrix(x1 -1,y2,z2) - global.matrix.sumMatrix(x2, y1 - 1, z2) + global.matrix.sumMatrix(x1 - 1, y1 - 1, z2)
 		var val2 = global.matrix.sumMatrix(x2, y2, z1 - 1) - global.matrix.sumMatrix(x1 - 1, y2, z1 - 1) - global.matrix.sumMatrix(x2, y1 - 1, z1 - 1) + global.matrix.sumMatrix(x1 - 1, y1 - 1, z1 - 1);
 
@@ -93,11 +112,8 @@ app.post('/matrix/sum', function(req,res){
 			response = JSON.parse('{"status":1, "sum":'+sum+'}');
 		}
 		res.json(response);
-	}
-	else {
 
-		response = JSON.parse('{"status":4}');
-		res.json(response);
+
 	}
 
 });
