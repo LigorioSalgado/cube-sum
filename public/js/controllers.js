@@ -71,6 +71,11 @@ cubeSum.controller('cubeCtrl',['$scope','$http', function($scope,$http){
 							$scope.result = "Matriz creada";
 							break;
 
+					case 3: 
+							$scope.class = "yellow";
+							$scope.result = "El limite no esta permitido";
+							break;
+
 			}
 				
 				

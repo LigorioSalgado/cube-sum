@@ -6,25 +6,30 @@ var cubeController = function (app){
 
 
 app.post('/matrix/new', function(req,res){
+	var response = null;
 	console.log("New request");
 	if(!req.body) return res.sendStatus(400) // Excepcion en caso de que no haya ningún dato en el cuerpo de la petición
 
 	var size = parseInt(req.body.size);
-	var num_query = parseInt(req.body.querys);
-	    global.matrix = new Matrix(size,num_query);
-	
-
-	if (!global.matrix){
-		var response = JSON.parse('{"status":0}');
-		res.json(response);
-
+	if (size > 100 ){
+			response = JSON.parse('{"status":3}');
+			res.json(response);
 	}else{
-		var response = JSON.parse('{"status":1}');
-		res.json(response);
+		var num_query = parseInt(req.body.querys);
+		    global.matrix = new Matrix(size,num_query);
+		
+
+		if (!global.matrix){
+		    response = JSON.parse('{"status":0}');
+			res.json(response);
+
+		}else{
+			response = JSON.parse('{"status":1}');
+			res.json(response);
+
+		}
 
 	}
-
-	
 
 });
 
