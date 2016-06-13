@@ -19,7 +19,7 @@ app.engine('html',swig.renderFile);
 app.set('view engine','html');
 app.set('views',__dirname+'/app/views');
 
-app.use(express.static("./public"));
+app.use(express.static("."));
 
 
 
