@@ -22,7 +22,7 @@ app.use(express.static("./public"));
 
 
 
-app.listen(3000);
+app.listen(8000);
 
 
 require('./app/controllers/cube')(app);
