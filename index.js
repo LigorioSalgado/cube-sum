@@ -4,8 +4,8 @@ var parser = require('body-parser');
 var session = require('express-session');
 var app = express();
 
-app.use(session({secret: '12345678'}));
-app.use(parser.json());
+app.use(session({secret: '12345678'}));// configuracion de sesiones
+app.use(parser.json()); // configuracion para parsear json
 
 app.set('view cache', false);
 // To disable Swig's cache, do the following:

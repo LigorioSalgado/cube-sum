@@ -4,12 +4,12 @@ var request = require('supertest');
 
 
 
-describe('Routing', function() {
+describe('Routing', function() { // caso general
   var url = 'http://localhost:3000';
   
-  describe('Create', function() {
-    it('No debe crear una matriz', function(done) {
-    var  req  = '{"size" :101 , "querys" :5 }';
+  describe('Create', function() {// caso especifico a  probar
+    it('No debe crear una matriz', function(done) { // descripcion del caso
+    var  req  = '{"size" :101 , "querys" :5 }'; // datos a enviar
     var obj = JSON.parse(req);
     request(url)
 	.post('/matrix/new')
@@ -17,12 +17,12 @@ describe('Routing', function() {
   .expect('Content-Type', /json/)
   .expect(200)
    
-	.end(function(err, res) {
+	.end(function(err, res) { // respuesta del servidor
           if (err) {
             throw err;
           }
           
-          res.body.should.have.property('status', 3);
+          res.body.should.have.property('status', 3);// verificacion de los resultados
           done();
         });
     });

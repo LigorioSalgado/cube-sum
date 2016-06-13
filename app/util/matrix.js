@@ -1,6 +1,6 @@
 var method = Matrix.prototype;
 
-Object.defineProperty(Error.prototype, 'toJSON', {
+Object.defineProperty(Error.prototype, 'toJSON', { // metodo modificado para parsear un objeto de la clase Error a un string tipo JSON
     value: function () {
         var alt = {};
 
@@ -14,11 +14,11 @@ Object.defineProperty(Error.prototype, 'toJSON', {
     writable: true
 });
 
-function Matrix (n,m){
+function Matrix (n,m){ // constructor
 
-	this.n = n;
-	this.m = m;
-	this.matrix = [];
+	this.n = n; // tamaño
+	this.m = m;// numero de querys
+	this.matrix = []; // se inicia la matriz
 
 	this.createMatrix();
 
@@ -26,35 +26,36 @@ function Matrix (n,m){
 
 method.constructor = Matrix
 
-method.createMatrix = function(){
-		var size = this.n;
-		console.log(this.matrix);
-		for (var x = 0; x <= this.n; x++) {
+method.createMatrix = function(){// metodo que crea  la matriz 3D
+		var size = this.n; // se asigna el tamaño  aunua variable
+		
+		for (var x = 0; x <= this.n; x++) { // se crea matriz en eje x
 			var array = [];
-			for (var y = 0; y <= this.n; y++) {
+			for (var y = 0; y <= this.n; y++) {// se crea matriz en eje y
 				var internal = [];
-				for (var z = 0; z <= this.n; z++) {
-					internal.push(0);
+				for (var z = 0; z <= this.n; z++) {// se crea matriz en eje z
+					internal.push(0); // se inserta un 0  en la casilla actal
 			}
-			array.push(internal);
+			array.push(internal); // se inserta un array dentro de la casilla
 		}
-		this.matrix.push(array);
+		this.matrix.push(array);// se completa la matriz
 	}
 
 		console.log("Matrix created");
 	}
 
-method.updateMatrix =function(x,y,z,num,exc){ 
+method.updateMatrix =function(x,y,z,num,exc){  // metodo que modifica la matriz
 
-	if( x > this.n || y > this.n || z > this.n){
+	if( x > this.n || y > this.n || z > this.n){ // comprueba si  los parametros dados estan dentro del rango de la matriz
 		
 		var err = new Error("Excede el rango de la matriz")
 		err.status = 0
-		exc(JSON.stringify(err));
+		exc(JSON.stringify(err)); // se regresa un estring tipo json si ocurre un error
 	}
 	else{
 		
 		exc(null);
+		/* Busca la casilla que se quiere modificar*/
 		for (var z1 = z; z1 <= this.n; z1 += z1 & (-z1)) {
 			for (var y1 = y; y1 <= this.n; y1 += y1 & (-y1)) {
 				for (var x1 = x; x1 <= this.n; x1 += x1 & (-x1)) {
@@ -63,16 +64,17 @@ method.updateMatrix =function(x,y,z,num,exc){
 			}
 		}
 	}
-}, //Hace el update en la posición indicada y con el numero dentro de la matriz
+}, 
 
 method.sumMatrix = function (x,y,z){
 		
 		var add = 0; // variable donde se almacena la suma del rango dentro de la matriz
 		if( x > this.n || y > this.n || z > this.n){
 
-			return NaN;
+			return NaN; // regresa un objeto del tipo 'No valid integer'
 		}
 		else{
+			/*  suma los campos  de los rangos especificados */
 			for (var z1 = z; z1 > 0; z1 -= z1 & -z1) {
 				for (var y1 = y; y1 > 0; y1 -= y1 & -y1) {
 					for (var x1 = x; x1 > 0; x1 -= x1 & -x1) {
@@ -85,25 +87,25 @@ method.sumMatrix = function (x,y,z){
 		}
 	}
 
-	/* Esta Seccion es de Getters */
+	/* Esta Seccion es de Getters y Setters*/
 
 
-	method.getMatrix = function(){
+	method.getMatrix = function(){// obtiene la matriz
 		return this.matrix;	
 
 	}
 
-	method.getSize = function() {
+	method.getSize = function() {// obtiene el tamaño	
 		return this.n;
 
 	}
 
-	method.getQuerys = function() {
+	method.getQuerys = function() {// obtiene el numero de querys
 		return this.m;
 
 	}
 
-	method.setMatrix = function() {
+	method.setMatrix = function() { // borra el contenido de una matriz
 		this.matrix = null;
 
 	}
